@@ -1,0 +1,294 @@
+╔═══════════════════════════════════════════════════════════════════════════╗
+║                                                                           ║
+║               YOGA STUDIO APP - PROJECT SUMMARY                           ║
+║                     p4-dfsjs-starter                                      ║
+║                                                                           ║
+╚═══════════════════════════════════════════════════════════════════════════╝
+
+📦 PROJECT STATISTICS
+═════════════════════
+
+Total Files Created: 49 files
+
+📚 Documentation:    10 files
+   - README.md
+   - QUICK_START.md
+   - START_HERE.md (entry point for students)
+   - ANTI-PATTERNS.md
+   - PROJECT_STRUCTURE.md
+   - TESTING_GUIDE.md
+   - INSTRUCTOR_NOTES.md
+   - DEPENDENCIES.md
+   - MANIFEST.md
+   - VERIFICATION.md
+
+⚙️  Configuration:   14 files
+   - package.json (x2)
+   - tsconfig.json (x3)
+   - docker-compose.yml
+   - vite.config.ts
+   - tailwind.config.js
+   - postcss.config.js
+   - nodemon.json
+   - .env / .env.example
+   - .gitignore
+   - index.html
+
+💻 Backend Code:     12 files
+   - 4 Controllers (auth, session, teacher, user)
+   - 2 DTOs (auth, session)
+   - 1 Middleware (auth)
+   - 1 Util (jwt)
+   - 1 Routes
+   - 1 App entry
+   - 1 Prisma schema
+   - 1 Seed script
+
+🎨 Frontend Code:    13 files
+   - 6 Pages (Login, Register, Sessions, SessionDetail, SessionForm, Profile)
+   - 1 Component (Navbar)
+   - 2 Services (api, auth)
+   - 1 Types
+   - 1 App component
+   - 1 Main entry
+   - 1 CSS
+
+───────────────────────────────────────────────────────────────────────────
+
+🎯 LEARNING OBJECTIVES
+═══════════════════════
+
+Exercise 1: Code Quality (40-50 hours)
+   → Fix 27 intentional anti-patterns
+   → Backend: 15 issues (service layer, error handling, validation)
+   → Frontend: 12 issues (hooks, types, patterns)
+
+Exercise 2: Testing (30-40 hours)
+   → Write comprehensive tests
+   → Backend: Unit + Integration tests
+   → Frontend: Unit + E2E tests
+   → Achieve 80%+ code coverage
+
+Total Estimated Time: 60-80 hours
+
+───────────────────────────────────────────────────────────────────────────
+
+🛠️  TECH STACK
+═══════════════
+
+Backend:
+   • Node.js 22 LTS
+   • TypeScript 5.4+
+   • Express 4.x
+   • Prisma ORM
+   • PostgreSQL 16
+   • JWT + bcrypt
+   • Zod validation
+
+Frontend:
+   • React 19
+   • TypeScript 5.4+
+   • Vite 5.x
+   • TailwindCSS 4.0
+   • React Router 6.x
+   • Axios
+
+Infrastructure:
+   • Docker + Docker Compose
+   • PostgreSQL container
+
+───────────────────────────────────────────────────────────────────────────
+
+✨ FEATURES
+═══════════
+
+Authentication:
+   ✓ User registration
+   ✓ User login with JWT
+   ✓ Password hashing
+   ✓ Admin vs User roles
+
+Session Management:
+   ✓ List sessions
+   ✓ View session details
+   ✓ Create session (admin)
+   ✓ Update session (admin)
+   ✓ Delete session (admin)
+   ✓ Join/leave session (user)
+
+Teachers:
+   ✓ List teachers
+   ✓ View teacher details
+
+Users:
+   ✓ View profile
+   ✓ Delete account
+
+───────────────────────────────────────────────────────────────────────────
+
+🔑 DEFAULT CREDENTIALS
+═══════════════════════
+
+Admin Account:
+   Email:    yoga@studio.com
+   Password: test!1234
+
+Regular User:
+   Email:    user@test.com
+   Password: test!1234
+
+───────────────────────────────────────────────────────────────────────────
+
+🌐 PORTS
+═════════
+
+Frontend:  http://localhost:3000
+Backend:   http://localhost:8080
+Database:  localhost:5432
+Prisma:    http://localhost:5555 (when running studio)
+
+───────────────────────────────────────────────────────────────────────────
+
+📊 CODE METRICS
+════════════════
+
+Lines of Code:
+   • Backend:       ~1,200 lines
+   • Frontend:      ~1,800 lines
+   • Documentation: ~4,000 lines
+   • Total:         ~7,000 lines
+
+Anti-Patterns:
+   • Backend:  15 intentional issues
+   • Frontend: 12 intentional issues
+   • Total:    27 problems to fix
+
+API Endpoints: 12 endpoints
+   • Public:    2 (register, login)
+   • Protected: 10 (sessions, teachers, users)
+
+Database Models: 4 models
+   • User
+   • Teacher
+   • Session
+   • SessionParticipation
+
+Seeded Data:
+   • 2 Users (1 admin, 1 regular)
+   • 3 Teachers
+   • 4 Sessions
+
+───────────────────────────────────────────────────────────────────────────
+
+🚀 QUICK START
+═══════════════
+
+1. Install Dependencies:
+   cd backend && npm install
+   cd ../frontend && npm install
+
+2. Start Database:
+   docker-compose up -d
+
+3. Setup Database:
+   cd backend
+   npx prisma migrate dev --name init
+   npm run prisma:seed
+
+4. Run Application:
+   Terminal 1: cd backend && npm run dev
+   Terminal 2: cd frontend && npm run dev
+
+5. Test:
+   Open http://localhost:3000
+   Login: yoga@studio.com / test!1234
+
+───────────────────────────────────────────────────────────────────────────
+
+📖 DOCUMENTATION GUIDE
+═══════════════════════
+
+For Students:
+   1. START_HERE.md        ← BEGIN HERE!
+   2. QUICK_START.md       (5-minute setup)
+   3. README.md            (complete overview)
+   4. PROJECT_STRUCTURE.md (architecture)
+   5. ANTI-PATTERNS.md     (issues to fix)
+   6. TESTING_GUIDE.md     (testing setup)
+
+For Instructors:
+   1. INSTRUCTOR_NOTES.md  (teaching guide)
+   2. ANTI-PATTERNS.md     (solutions & hints)
+   3. VERIFICATION.md      (quality checks)
+   4. MANIFEST.md          (project overview)
+
+───────────────────────────────────────────────────────────────────────────
+
+✅ SUCCESS CRITERIA
+════════════════════
+
+Students succeed when:
+   ✓ All 27 anti-patterns fixed
+   ✓ Service layer implemented
+   ✓ Global error handling working
+   ✓ No `any` types remaining
+   ✓ useEffect cleanup implemented
+   ✓ Axios interceptors added
+   ✓ 80%+ test coverage achieved
+   ✓ All tests passing
+   ✓ Application fully functional
+   ✓ Code clean and documented
+
+───────────────────────────────────────────────────────────────────────────
+
+🎓 GRADING RUBRIC
+══════════════════
+
+Code Quality (40 points):
+   • Service Layer:     10 pts
+   • Error Handling:    10 pts
+   • TypeScript:        10 pts
+   • Frontend Patterns: 10 pts
+
+Testing (40 points):
+   • Backend Tests:     20 pts
+   • Frontend Tests:    20 pts
+
+Coverage (10 points):
+   • 90%+:  10 pts
+   • 85-89%: 8 pts
+   • 80-84%: 6 pts
+
+Documentation (10 points):
+   • README:   5 pts
+   • Comments: 5 pts
+
+Total: 100 points
+
+───────────────────────────────────────────────────────────────────────────
+
+🎉 PROJECT STATUS
+══════════════════
+
+Status: ✅ COMPLETE & READY FOR DISTRIBUTION
+
+Generated:  2026-01-19
+Version:    1.0.0
+By:         CodebaseFactory - OpenClassrooms
+
+All files created ✓
+All features working ✓
+Documentation complete ✓
+Anti-patterns intentional ✓
+Tests examples provided ✓
+
+Ready for students! 🚀
+
+───────────────────────────────────────────────────────────────────────────
+
+For more details, see:
+• START_HERE.md (students start point)
+• MANIFEST.md (complete project manifest)
+• VERIFICATION.md (quality checklist)
+
+═══════════════════════════════════════════════════════════════════════════
