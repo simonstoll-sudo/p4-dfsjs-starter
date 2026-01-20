@@ -1,8 +1,6 @@
-# Yoga Studio App - Starter Project
+# Yoga Studio Management System
 
-This is a starter codebase for a Full Stack Yoga Studio application. The project is designed as a learning exercise where students will:
-1. Identify and fix intentional anti-patterns in the code
-2. Write comprehensive tests (unit, integration, and e2e) to achieve 80% code coverage
+A full-stack web application for managing yoga studio operations, including session scheduling, teacher management, and user registrations.
 
 ## Tech Stack
 
@@ -279,31 +277,14 @@ p4-dfsjs-starter/
 └── README.md
 ```
 
-## Learning Objectives
+## Testing
 
-### Exercise 1: Code Quality Improvements
-Students should identify and fix the following intentional anti-patterns:
+The project supports comprehensive testing with the following frameworks:
+- **Unit tests**: For testing individual components and utilities
+- **Integration tests**: For testing API endpoints
+- **End-to-end tests**: For testing critical user flows
 
-**Backend:**
-- Repetitive try/catch blocks in controllers (should use global error handler)
-- Controllers calling Prisma directly (should use service layer)
-- Business logic in controllers (should be in services)
-- Manual validations with if/else (should use Zod schemas properly)
-- Usage of `any` type (should use proper TypeScript types)
-
-**Frontend:**
-- useEffect without cleanup (missing AbortController)
-- Props typed with `any` (should have proper interfaces)
-- Return types not specified (should be explicit)
-- Verbose conditional rendering (should use && or ternary)
-- Usage of `any` type everywhere (should use proper TypeScript types)
-
-### Exercise 2: Testing
-Students should write comprehensive tests:
-- Unit tests for services, utilities, and components
-- Integration tests for API endpoints
-- End-to-end tests for critical user flows
-- Achieve at least 80% code coverage
+Run tests with the appropriate npm scripts in each directory.
 
 ## Troubleshooting
 
@@ -340,6 +321,10 @@ npx prisma migrate reset
 npx prisma generate
 ```
 
+## Contributing
+
+Please follow the existing code style and ensure all tests pass before submitting changes.
+
 ## License
 
-This project is for educational purposes only.
+MIT
