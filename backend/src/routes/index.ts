@@ -32,6 +32,9 @@ router.get('/api/teacher/:id', authMiddleware, (req, res) => teacherController.g
 
 // User routes (protected)
 router.get('/api/user/:id', authMiddleware, (req, res) => userController.getById(req, res));
+router.post('/api/user/promote-admin', authMiddleware, (req, res) =>
+  userController.promoteSelfToAdmin(req, res),
+);
 router.delete('/api/user/:id', authMiddleware, (req, res) => userController.delete(req, res));
 
 export default router;

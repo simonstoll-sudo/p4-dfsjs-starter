@@ -5,16 +5,11 @@ import { generateToken } from '../utils/jwt.util';
 
 const prisma = new PrismaClient();
 
-// ANTI-PATTERN: Try/catch répétitif dans chaque méthode
-// ANTI-PATTERN: Appel direct à Prisma au lieu de service
-// ANTI-PATTERN: Validations manuelles avec if/else
-// ANTI-PATTERN: Utilisation de any
 export class AuthController {
   async login(req: Request, res: Response) {
     try {
       const { email, password } = req.body;
 
-      // ANTI-PATTERN: Validation manuelle au lieu de Zod
       if (!email) {
         return res.status(400).json({ message: 'Email is required' });
       }
@@ -28,7 +23,6 @@ export class AuthController {
         return res.status(400).json({ message: 'Password must be a string' });
       }
 
-      // ANTI-PATTERN: Logique métier dans le controller
       const user = await prisma.user.findUnique({
         where: { email },
       });
@@ -45,7 +39,6 @@ export class AuthController {
 
       const token = generateToken(user.id);
 
-      // ANTI-PATTERN: any pour le type de retour
       const response: any = {
         id: user.id,
         email: user.email,
@@ -66,7 +59,6 @@ export class AuthController {
     try {
       const { email, password, firstName, lastName } = req.body;
 
-      // ANTI-PATTERN: Validations manuelles répétitives
       if (!email) {
         return res.status(400).json({ message: 'Email is required' });
       }
@@ -83,7 +75,6 @@ export class AuthController {
         return res.status(400).json({ message: 'Password must be at least 8 characters' });
       }
 
-      // ANTI-PATTERN: Logique métier dans le controller
       const existingUser = await prisma.user.findUnique({
         where: { email },
       });
@@ -106,7 +97,6 @@ export class AuthController {
 
       const token = generateToken(user.id);
 
-      // ANTI-PATTERN: any
       const response: any = {
         id: user.id,
         email: user.email,

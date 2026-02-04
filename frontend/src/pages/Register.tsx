@@ -2,7 +2,6 @@ import { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { authService } from '../services/auth.service';
 
-// ANTI-PATTERN: any pour les états
 function Register() {
   const navigate = useNavigate();
   const [formData, setFormData] = useState<any>({
@@ -14,7 +13,6 @@ function Register() {
   const [error, setError] = useState<any>('');
   const [loading, setLoading] = useState<any>(false);
 
-  // ANTI-PATTERN: any pour les paramètres et retour
   const handleChange = (e: any): any => {
     setFormData({
       ...formData,
@@ -22,7 +20,6 @@ function Register() {
     });
   };
 
-  // ANTI-PATTERN: any pour le retour
   const handleSubmit = async (e: any): Promise<any> => {
     e.preventDefault();
     setError('');
@@ -45,7 +42,6 @@ function Register() {
           Register for Yoga Studio
         </h2>
 
-        {/* ANTI-PATTERN: Rendu conditionnel verbeux */}
         {error ? (
           <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-4">
             {error}

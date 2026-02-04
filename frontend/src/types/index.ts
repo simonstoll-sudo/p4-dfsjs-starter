@@ -1,5 +1,3 @@
-// ANTI-PATTERN: Types basiques, certains any utilisés volontairement
-
 export interface User {
   id: number;
   email: string;

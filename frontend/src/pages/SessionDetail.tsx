@@ -4,8 +4,6 @@ import api from '../services/api';
 import { authService } from '../services/auth.service';
 import { Session } from '../types';
 
-// ANTI-PATTERN: any utilisé
-// ANTI-PATTERN: useEffect sans cleanup
 function SessionDetail() {
   const { id } = useParams();
   const navigate = useNavigate();
@@ -15,12 +13,10 @@ function SessionDetail() {
   const user = authService.getCurrentUser();
   const token = authService.getToken();
 
-  // ANTI-PATTERN: useEffect sans cleanup
   useEffect(() => {
     fetchSession();
   }, [id]);
 
-  // ANTI-PATTERN: any pour le retour
   const fetchSession = async (): Promise<any> => {
     try {
       setLoading(true);
@@ -38,7 +34,6 @@ function SessionDetail() {
     }
   };
 
-  // ANTI-PATTERN: any
   const handleParticipate = async (): Promise<any> => {
     try {
       await api.post(
@@ -57,7 +52,6 @@ function SessionDetail() {
     }
   };
 
-  // ANTI-PATTERN: any
   const handleUnparticipate = async (): Promise<any> => {
     try {
       await api.delete(`/session/${id}/participate/${user.id}`, {
@@ -72,7 +66,6 @@ function SessionDetail() {
     }
   };
 
-  // ANTI-PATTERN: any
   const handleDelete = async (): Promise<any> => {
     if (!window.confirm('Are you sure you want to delete this session?')) {
       return;
@@ -91,7 +84,6 @@ function SessionDetail() {
     }
   };
 
-  // ANTI-PATTERN: Rendu conditionnel verbeux
   if (loading) {
     return (
       <div className="min-h-screen bg-gray-100 flex items-center justify-center">
@@ -100,7 +92,6 @@ function SessionDetail() {
     );
   }
 
-  // ANTI-PATTERN: Rendu conditionnel verbeux
   if (error || !session) {
     return (
       <div className="min-h-screen bg-gray-100 flex items-center justify-center">
@@ -153,7 +144,6 @@ function SessionDetail() {
           </div>
 
           <div className="flex space-x-4">
-            {/* ANTI-PATTERN: Rendu conditionnel verbeux */}
             {user.admin ? (
               <>
                 <button
@@ -171,7 +161,6 @@ function SessionDetail() {
               </>
             ) : (
               <>
-                {/* ANTI-PATTERN: Rendu conditionnel verbeux imbriqué */}
                 {isParticipating ? (
                   <button
                     onClick={handleUnparticipate}

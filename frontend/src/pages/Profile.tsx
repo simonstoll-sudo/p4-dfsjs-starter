@@ -3,24 +3,23 @@ import { useNavigate } from 'react-router-dom';
 import api from '../services/api';
 import { authService } from '../services/auth.service';
 
-// ANTI-PATTERN: any utilisé
-// ANTI-PATTERN: useEffect sans cleanup
 function Profile() {
   const navigate = useNavigate();
   const [userInfo, setUserInfo] = useState<any>(null);
   const [loading, setLoading] = useState<any>(true);
   const [error, setError] = useState<any>('');
+  const [promoteLoading, setPromoteLoading] = useState<any>(false);
+  const [promoteError, setPromoteError] = useState<any>('');
   const user = authService.getCurrentUser();
   const token = authService.getToken();
+  const isDev = (import.meta as any).env?.DEV === true;
 
-  // ANTI-PATTERN: useEffect sans cleanup
   useEffect(() => {
     if (user) {
       fetchUserInfo();
     }
   }, []);
 
-  // ANTI-PATTERN: any
   const fetchUserInfo = async (): Promise<any> => {
     try {
       setLoading(true);
@@ -38,7 +37,6 @@ function Profile() {
     }
   };
 
-  // ANTI-PATTERN: any
   const handleDeleteAccount = async (): Promise<any> => {
     if (!window.confirm('Are you sure you want to delete your account? This action cannot be undone.')) {
       return;
@@ -58,7 +56,29 @@ function Profile() {
     }
   };
 
-  // ANTI-PATTERN: Rendu conditionnel verbeux
+  const handlePromoteAdmin = async (): Promise<any> => {
+    try {
+      setPromoteError('');
+      setPromoteLoading(true);
+      const response = await api.post(
+        '/user/promote-admin',
+        {},
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        },
+      );
+      setUserInfo(response.data);
+      authService.updateCurrentUser({ admin: response.data.admin });
+    } catch (err: any) {
+      setPromoteError('Failed to promote to admin');
+      console.error(err);
+    } finally {
+      setPromoteLoading(false);
+    }
+  };
+
   if (loading) {
     return (
       <div className="min-h-screen bg-gray-100 flex items-center justify-center">
@@ -67,7 +87,6 @@ function Profile() {
     );
   }
 
-  // ANTI-PATTERN: Rendu conditionnel verbeux
   if (error || !userInfo) {
     return (
       <div className="min-h-screen bg-gray-100 flex items-center justify-center">
@@ -111,7 +130,6 @@ function Profile() {
                 Account Type
               </label>
               <p className="text-lg text-gray-800">
-                {/* ANTI-PATTERN: Rendu conditionnel verbeux */}
                 {userInfo.admin ? (
                   <span className="bg-purple-100 text-purple-800 px-3 py-1 rounded-full text-sm font-semibold">
                     Administrator
@@ -122,6 +140,20 @@ function Profile() {
                   </span>
                 )}
               </p>
+              {isDev && !userInfo.admin ? (
+                <div className="mt-3">
+                  <button
+                    onClick={handlePromoteAdmin}
+                    disabled={promoteLoading}
+                    className="bg-emerald-600 text-white py-2 px-4 rounded-lg hover:bg-emerald-700 disabled:opacity-60"
+                  >
+                    {promoteLoading ? 'Promoting...' : 'Promote to Admin (Dev)'}
+                  </button>
+                  {promoteError ? (
+                    <div className="mt-2 text-sm text-red-600">{promoteError}</div>
+                  ) : null}
+                </div>
+              ) : null}
             </div>
 
             <div className="border-b pb-4">

@@ -4,8 +4,6 @@ import api from '../services/api';
 import { authService } from '../services/auth.service';
 import { Teacher, Session } from '../types';
 
-// ANTI-PATTERN: any utilisé
-// ANTI-PATTERN: useEffect sans cleanup
 function SessionForm() {
   const navigate = useNavigate();
   const { id } = useParams();
@@ -30,7 +28,6 @@ function SessionForm() {
     }
   }, [user, navigate]);
 
-  // ANTI-PATTERN: useEffect sans cleanup
   useEffect(() => {
     fetchTeachers();
     if (isEditMode) {
@@ -38,7 +35,6 @@ function SessionForm() {
     }
   }, [id]);
 
-  // ANTI-PATTERN: any
   const fetchTeachers = async (): Promise<any> => {
     try {
       const response = await api.get<Teacher[]>('/teacher', {
@@ -52,7 +48,6 @@ function SessionForm() {
     }
   };
 
-  // ANTI-PATTERN: any
   const fetchSession = async (): Promise<any> => {
     try {
       const response = await api.get<Session>(`/session/${id}`, {
@@ -73,7 +68,6 @@ function SessionForm() {
     }
   };
 
-  // ANTI-PATTERN: any
   const handleChange = (e: any): any => {
     const value =
       e.target.name === 'teacherId' ? parseInt(e.target.value) : e.target.value;
@@ -83,7 +77,6 @@ function SessionForm() {
     });
   };
 
-  // ANTI-PATTERN: any
   const handleSubmit = async (e: any): Promise<any> => {
     e.preventDefault();
     setError('');
@@ -119,7 +112,6 @@ function SessionForm() {
             {isEditMode ? 'Edit Session' : 'Create New Session'}
           </h1>
 
-          {/* ANTI-PATTERN: Rendu conditionnel verbeux */}
           {error ? (
             <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-4">
               {error}
@@ -167,7 +159,6 @@ function SessionForm() {
                 required
               >
                 <option value="">Select a teacher</option>
-                {/* ANTI-PATTERN: any dans map */}
                 {teachers.map((teacher: any) => (
                   <option key={teacher.id} value={teacher.id}>
                     {teacher.firstName} {teacher.lastName}

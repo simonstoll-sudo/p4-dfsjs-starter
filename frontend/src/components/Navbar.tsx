@@ -1,14 +1,11 @@
 import { Link, useNavigate } from 'react-router-dom';
 import { authService } from '../services/auth.service';
 
-// ANTI-PATTERN: Props avec any
-// ANTI-PATTERN: Pas de types pour les props
 function Navbar(props: any) {
   const navigate = useNavigate();
   const user = authService.getCurrentUser();
   const isAuthenticated = authService.isAuthenticated();
 
-  // ANTI-PATTERN: any pour la fonction
   const handleLogout = (): any => {
     authService.logout();
     navigate('/login');
@@ -23,7 +20,6 @@ function Navbar(props: any) {
           </Link>
 
           <div className="flex items-center space-x-6">
-            {/* ANTI-PATTERN: Rendu conditionnel verbeux */}
             {isAuthenticated ? (
               <>
                 <Link to="/sessions" className="hover:text-indigo-200">

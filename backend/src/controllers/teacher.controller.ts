@@ -4,20 +4,15 @@ import { AuthRequest } from '../middleware/auth.middleware';
 
 const prisma = new PrismaClient();
 
-// ANTI-PATTERN: Try/catch répétitif
-// ANTI-PATTERN: Appel direct à Prisma
-// ANTI-PATTERN: any
 export class TeacherController {
   async getAll(req: AuthRequest, res: Response) {
     try {
-      // ANTI-PATTERN: Appel direct à Prisma
       const teachers = await prisma.teacher.findMany({
         orderBy: {
           createdAt: 'desc',
         },
       });
 
-      // ANTI-PATTERN: any
       const response: any = teachers.map((teacher: any) => ({
         id: teacher.id,
         firstName: teacher.firstName,
@@ -35,9 +30,8 @@ export class TeacherController {
 
   async getById(req: AuthRequest, res: Response) {
     try {
-      const { id } = req.params;
+      const { id } = req.params as { id: string };
 
-      // ANTI-PATTERN: Validation manuelle
       if (!id) {
         return res.status(400).json({ message: 'Teacher ID is required' });
       }
@@ -48,7 +42,6 @@ export class TeacherController {
         return res.status(400).json({ message: 'Invalid teacher ID' });
       }
 
-      // ANTI-PATTERN: Logique dans controller
       const teacher = await prisma.teacher.findUnique({
         where: { id: teacherId },
       });
@@ -57,7 +50,6 @@ export class TeacherController {
         return res.status(404).json({ message: 'Teacher not found' });
       }
 
-      // ANTI-PATTERN: any
       const response: any = {
         id: teacher.id,
         firstName: teacher.firstName,

@@ -8,10 +8,8 @@ import SessionForm from './pages/SessionForm';
 import Profile from './pages/Profile';
 import { authService } from './services/auth.service';
 
-// ANTI-PATTERN: any pour les props
 function PrivateRoute({ children }: any) {
   const isAuthenticated = authService.isAuthenticated();
-  // ANTI-PATTERN: Rendu conditionnel verbeux
   return isAuthenticated ? children : <Navigate to="/login" />;
 }
 

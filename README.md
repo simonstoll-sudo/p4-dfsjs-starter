@@ -16,9 +16,9 @@ A full-stack web application for managing yoga studio operations, including sess
 
 ### Frontend
 - React 19 (Hooks only)
-- TypeScript 5.4+ (Strict Mode)
-- Vite 5.x
-- TailwindCSS 4.0
+- TypeScript 5.9+ (Strict Mode)
+- Vite 7.x
+- TailwindCSS 4.x
 - React Router 6.x
 - Axios
 
@@ -108,7 +108,7 @@ This will start a PostgreSQL container on port 5432.
 
 ```bash
 cd backend
-npx prisma migrate dev --name init
+npm run prisma:migrate
 ```
 
 ### 7. Seed the Database

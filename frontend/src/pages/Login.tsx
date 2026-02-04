@@ -2,7 +2,6 @@ import { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { authService } from '../services/auth.service';
 
-// ANTI-PATTERN: any pour les états et fonctions
 function Login() {
   const navigate = useNavigate();
   const [email, setEmail] = useState<any>('');
@@ -10,7 +9,6 @@ function Login() {
   const [error, setError] = useState<any>('');
   const [loading, setLoading] = useState<any>(false);
 
-  // ANTI-PATTERN: any pour le retour
   const handleSubmit = async (e: any): Promise<any> => {
     e.preventDefault();
     setError('');
@@ -33,7 +31,6 @@ function Login() {
           Login to Yoga Studio
         </h2>
 
-        {/* ANTI-PATTERN: Rendu conditionnel verbeux */}
         {error ? (
           <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-4">
             {error}
@@ -72,7 +69,6 @@ function Login() {
             disabled={loading}
             className="w-full bg-indigo-600 text-white py-2 px-4 rounded-lg hover:bg-indigo-700 disabled:bg-gray-400"
           >
-            {/* ANTI-PATTERN: Rendu conditionnel verbeux */}
             {loading ? 'Loading...' : 'Login'}
           </button>
         </form>

@@ -4,14 +4,9 @@ import { AuthRequest } from '../middleware/auth.middleware';
 
 const prisma = new PrismaClient();
 
-// ANTI-PATTERN: Try/catch répétitif dans chaque méthode
-// ANTI-PATTERN: Appel direct à Prisma au lieu de service
-// ANTI-PATTERN: Logique métier dans les controllers
-// ANTI-PATTERN: Utilisation de any
 export class SessionController {
   async getAll(req: AuthRequest, res: Response) {
     try {
-      // ANTI-PATTERN: Appel direct à Prisma
       const sessions = await prisma.session.findMany({
         include: {
           teacher: true,
@@ -23,7 +18,6 @@ export class SessionController {
         },
       });
 
-      // ANTI-PATTERN: any
       const response: any = sessions.map((session: any) => ({
         id: session.id,
         name: session.name,
@@ -48,9 +42,8 @@ export class SessionController {
 
   async getById(req: AuthRequest, res: Response) {
     try {
-      const { id } = req.params;
+      const { id } = req.params as { id: string };
 
-      // ANTI-PATTERN: Validation manuelle
       if (!id) {
         return res.status(400).json({ message: 'Session ID is required' });
       }
@@ -61,7 +54,6 @@ export class SessionController {
         return res.status(400).json({ message: 'Invalid session ID' });
       }
 
-      // ANTI-PATTERN: Logique dans le controller
       const session = await prisma.session.findUnique({
         where: { id: sessionId },
         include: {
@@ -78,7 +70,6 @@ export class SessionController {
         return res.status(404).json({ message: 'Session not found' });
       }
 
-      // ANTI-PATTERN: any
       const response: any = {
         id: session.id,
         name: session.name,
@@ -105,7 +96,6 @@ export class SessionController {
     try {
       const { name, date, description, teacherId } = req.body;
 
-      // ANTI-PATTERN: Validations manuelles
       if (!name) {
         return res.status(400).json({ message: 'Name is required' });
       }
@@ -119,7 +109,6 @@ export class SessionController {
         return res.status(400).json({ message: 'Teacher ID is required' });
       }
 
-      // ANTI-PATTERN: Vérification admin dans le controller
       const user = await prisma.user.findUnique({
         where: { id: req.userId },
       });
@@ -128,7 +117,6 @@ export class SessionController {
         return res.status(403).json({ message: 'Admin access required' });
       }
 
-      // ANTI-PATTERN: Logique métier
       const teacher = await prisma.teacher.findUnique({
         where: { id: teacherId },
       });
@@ -150,7 +138,6 @@ export class SessionController {
         },
       });
 
-      // ANTI-PATTERN: any
       const response: any = {
         id: session.id,
         name: session.name,
@@ -175,10 +162,9 @@ export class SessionController {
 
   async update(req: AuthRequest, res: Response) {
     try {
-      const { id } = req.params;
+      const { id } = req.params as { id: string };
       const { name, date, description, teacherId } = req.body;
 
-      // ANTI-PATTERN: Validations manuelles
       if (!id) {
         return res.status(400).json({ message: 'Session ID is required' });
       }
@@ -189,7 +175,6 @@ export class SessionController {
         return res.status(400).json({ message: 'Invalid session ID' });
       }
 
-      // ANTI-PATTERN: Vérification admin répétée
       const user = await prisma.user.findUnique({
         where: { id: req.userId },
       });
@@ -198,7 +183,6 @@ export class SessionController {
         return res.status(403).json({ message: 'Admin access required' });
       }
 
-      // ANTI-PATTERN: Logique dans controller
       const existingSession = await prisma.session.findUnique({
         where: { id: sessionId },
       });
@@ -207,7 +191,6 @@ export class SessionController {
         return res.status(404).json({ message: 'Session not found' });
       }
 
-      // ANTI-PATTERN: any
       const updateData: any = {};
       if (name) updateData.name = name;
       if (date) updateData.date = new Date(date);
@@ -259,9 +242,8 @@ export class SessionController {
 
   async delete(req: AuthRequest, res: Response) {
     try {
-      const { id } = req.params;
+      const { id } = req.params as { id: string };
 
-      // ANTI-PATTERN: Validations manuelles
       if (!id) {
         return res.status(400).json({ message: 'Session ID is required' });
       }
@@ -272,7 +254,6 @@ export class SessionController {
         return res.status(400).json({ message: 'Invalid session ID' });
       }
 
-      // ANTI-PATTERN: Vérification admin répétée
       const user = await prisma.user.findUnique({
         where: { id: req.userId },
       });
@@ -281,7 +262,6 @@ export class SessionController {
         return res.status(403).json({ message: 'Admin access required' });
       }
 
-      // ANTI-PATTERN: Logique dans controller
       const existingSession = await prisma.session.findUnique({
         where: { id: sessionId },
       });
@@ -303,9 +283,8 @@ export class SessionController {
 
   async participate(req: AuthRequest, res: Response) {
     try {
-      const { id, userId } = req.params;
+      const { id, userId } = req.params as { id: string, userId: string };
 
-      // ANTI-PATTERN: Validations manuelles
       if (!id) {
         return res.status(400).json({ message: 'Session ID is required' });
       }
@@ -323,7 +302,6 @@ export class SessionController {
         return res.status(400).json({ message: 'Invalid user ID' });
       }
 
-      // ANTI-PATTERN: Logique dans controller
       const session = await prisma.session.findUnique({
         where: { id: sessionId },
       });
@@ -340,7 +318,6 @@ export class SessionController {
         return res.status(404).json({ message: 'User not found' });
       }
 
-      // ANTI-PATTERN: Vérification d'existence répétée
       const existingParticipation = await prisma.sessionParticipation.findUnique({
         where: {
           sessionId_userId: {
@@ -370,9 +347,8 @@ export class SessionController {
 
   async unparticipate(req: AuthRequest, res: Response) {
     try {
-      const { id, userId } = req.params;
+      const { id, userId } = req.params as { id: string, userId: string };
 
-      // ANTI-PATTERN: Validations manuelles répétées
       if (!id) {
         return res.status(400).json({ message: 'Session ID is required' });
       }
@@ -390,7 +366,6 @@ export class SessionController {
         return res.status(400).json({ message: 'Invalid user ID' });
       }
 
-      // ANTI-PATTERN: Logique dans controller
       const participation = await prisma.sessionParticipation.findUnique({
         where: {
           sessionId_userId: {

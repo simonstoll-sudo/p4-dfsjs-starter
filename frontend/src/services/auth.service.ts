@@ -1,7 +1,6 @@
 import api from './api';
 import { AuthResponse, LoginCredentials, RegisterData } from '../types';
 
-// ANTI-PATTERN: any utilisé pour les retours
 export const authService = {
   login: async (credentials: LoginCredentials): Promise<any> => {
     const response = await api.post<AuthResponse>('/auth/login', credentials);
@@ -32,6 +31,17 @@ export const authService = {
       return JSON.parse(userStr);
     }
     return null;
+  },
+
+  updateCurrentUser: (updates: Partial<AuthResponse>): AuthResponse | null => {
+    const userStr = localStorage.getItem('user');
+    if (!userStr) {
+      return null;
+    }
+    const existing = JSON.parse(userStr);
+    const nextUser = { ...existing, ...updates };
+    localStorage.setItem('user', JSON.stringify(nextUser));
+    return nextUser;
   },
 
   getToken: (): string | null => {

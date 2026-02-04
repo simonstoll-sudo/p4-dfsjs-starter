@@ -4,8 +4,6 @@ import api from '../services/api';
 import { authService } from '../services/auth.service';
 import { Session } from '../types';
 
-// ANTI-PATTERN: any utilisé
-// ANTI-PATTERN: useEffect sans cleanup (pas d'AbortController)
 function Sessions() {
   const [sessions, setSessions] = useState<any>([]);
   const [loading, setLoading] = useState<any>(true);
@@ -13,16 +11,13 @@ function Sessions() {
   const user = authService.getCurrentUser();
   const token = authService.getToken();
 
-  // ANTI-PATTERN: useEffect sans cleanup, pas d'AbortController
   useEffect(() => {
     fetchSessions();
   }, []);
 
-  // ANTI-PATTERN: any pour le retour
   const fetchSessions = async (): Promise<any> => {
     try {
       setLoading(true);
-      // ANTI-PATTERN: Token ajouté manuellement à chaque requête
       const response = await api.get<Session[]>('/session', {
         headers: {
           Authorization: `Bearer ${token}`,
@@ -37,7 +32,6 @@ function Sessions() {
     }
   };
 
-  // ANTI-PATTERN: any pour paramètre
   const handleDelete = async (sessionId: any): Promise<any> => {
     if (!window.confirm('Are you sure you want to delete this session?')) {
       return;
@@ -56,7 +50,6 @@ function Sessions() {
     }
   };
 
-  // ANTI-PATTERN: Rendu conditionnel verbeux
   if (loading) {
     return (
       <div className="min-h-screen bg-gray-100 flex items-center justify-center">
@@ -65,7 +58,6 @@ function Sessions() {
     );
   }
 
-  // ANTI-PATTERN: Rendu conditionnel verbeux
   if (error) {
     return (
       <div className="min-h-screen bg-gray-100 flex items-center justify-center">
@@ -81,7 +73,6 @@ function Sessions() {
       <div className="container mx-auto px-4">
         <div className="flex justify-between items-center mb-8">
           <h1 className="text-3xl font-bold text-gray-800">Yoga Sessions</h1>
-          {/* ANTI-PATTERN: Rendu conditionnel verbeux */}
           {user && user.admin ? (
             <Link
               to="/sessions/create"
@@ -92,14 +83,12 @@ function Sessions() {
           ) : null}
         </div>
 
-        {/* ANTI-PATTERN: Rendu conditionnel verbeux */}
         {sessions.length === 0 ? (
           <div className="bg-white rounded-lg shadow-md p-8 text-center">
             <p className="text-gray-600">No sessions available</p>
           </div>
         ) : (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {/* ANTI-PATTERN: any pour le paramètre map */}
             {sessions.map((session: any) => (
               <div key={session.id} className="bg-white rounded-lg shadow-md p-6">
                 <h3 className="text-xl font-bold text-gray-800 mb-2">
@@ -126,7 +115,6 @@ function Sessions() {
                     View Details
                   </Link>
 
-                  {/* ANTI-PATTERN: Rendu conditionnel verbeux */}
                   {user && user.admin ? (
                     <button
                       onClick={() => handleDelete(session.id)}
